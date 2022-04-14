@@ -75,7 +75,7 @@ public class KMeans {
         List<Position> oldCenters = new ArrayList<>();
 
         for (Pair<Position, Cluster> centroid: centroids) {
-            newCentroids.add(new Pair<>(centroid.second.getCenterOfMass(), new Cluster()));
+            newCentroids.add(new Pair<>(centroid.second.getCenter(), new Cluster()));
             oldCenters.add(centroid.first);
         }
         centroids = newCentroids;

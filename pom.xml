@@ -15,69 +15,77 @@
     <description>similarity_join</description>
     <properties>
         <java.version>17</java.version>
+        <spring.version>5.1.9.RELEASE</spring.version>
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- This is a web application -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- Need this to compile JSP -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <scope>provided</scope>
         </dependency>
 
-        <dependency>
-        <groupId>org.openpnp</groupId>
-        <artifactId>opencv</artifactId>
-        <version>4.5.1-2</version>
-        </dependency>
-
+        <!-- Apache commons op, easier work with files -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
 
+        <!-- JOpenSurf -->
         <dependency>
-            <!-- neznam treba dorobic -->
-            <groupId>com.marinsim.lib.jopensurf</groupId>
+            <groupId>fit.cvut.cz.vwm.semestralka.lib.jopensurf</groupId>
             <artifactId>jopensurf</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/JOpenSurf.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-el</artifactId>
-            <version>9.0.60</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.8.2</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.8.1</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+            <version>2.6.6</version>
+            <scope>test</scope>
         </dependency>
+
 
     </dependencies>
 
+
     <build>
+        <finalName>
+            vwm.spracvit.semestralka
+        </finalName>
         <plugins>
+
+            <!-- runable war as output-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
+            <!-- include the JOpenSurf - it is local -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -91,7 +99,6 @@
                     </webResources>
                 </configuration>
             </plugin>
-
 
         </plugins>
     </build>

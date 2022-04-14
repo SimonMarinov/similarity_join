@@ -8,19 +8,24 @@ package com.marinsim.similarity_join.backEnd;
 public class Values {
     private static int numOfClusters;
     private static int MaxNumOfIterations;
-    private static int alphaConstant;
+    private static double alphaConstant;
+    private static double percentageLimit;
+    private static double distanceLimit;
+
     private static boolean initOnlyOnce = false;
 
-    public Values(int numOfClusters, int maxNumOfIterations, int alpha) {
-        if (initOnlyOnce) throw new IllegalCallerException();
+    public Values(int numOfClus, int maxNumOfIterations, double alpha, double percentageLim, double distanceLim) {
+        if (initOnlyOnce) throw new IllegalArgumentException();
 
-        this.numOfClusters = numOfClusters;
+        distanceLimit = distanceLim;
+        percentageLimit = percentageLim;
+        numOfClusters = numOfClus;
         MaxNumOfIterations = maxNumOfIterations;
         alphaConstant = alpha;
         initOnlyOnce = true;
     }
 
-    public static int getAlphaConstant() {
+    public static double getAlphaConstant() {
         return alphaConstant;
     }
 
@@ -30,5 +35,13 @@ public class Values {
 
     public static int getMaxNumOfIterations() {
         return MaxNumOfIterations;
+    }
+
+    public static double getPercentageLimit() {
+        return percentageLimit;
+    }
+
+    public static double getDistanceLimit() {
+        return distanceLimit;
     }
 }

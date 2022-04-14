@@ -30,4 +30,8 @@ public class MyImage {
     public final List<Cluster> getFeatures() {
         return fetures;
     }
+
+    public String getName() {
+        return name;
+    }
 }

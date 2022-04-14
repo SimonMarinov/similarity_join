@@ -1,4 +1,6 @@
-package com.marinsim.similarity_join.backEnd;
+package com.marinsim.similarity_join.backEnd.ImgComparators;
+
+import com.marinsim.similarity_join.backEnd.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,15 +8,26 @@ import java.util.List;
 /**
  * source for math is : http://siret.ms.mff.cuni.cz/skopal/pub/GPU_CIKM.pdf
  */
-public class SqfdFunction {
-    public static double calculateSim(MyImage lfs, MyImage rhs, SimilarityFunction function) {
+public class SqfdComparator implements ImgComparator {
+    private SimilarityFunction function = null;
+
+    public SqfdComparator(SimilarityFunction fun) {
+        function = fun;
+    }
+
+    @Override
+    public double calcComparison(MyImage lfs, MyImage rhs) {
+        return calculateSim(lfs, rhs);
+    }
+
+    public double calculateSim(MyImage lfs, MyImage rhs) {
         List<Double> weightVec = calcWeightvec(lfs.getFeatures(), rhs.getFeatures());
         double [][] matrix = calcMatrix(lfs.getFeatures(), rhs.getFeatures(), function);
         return sqfdFormulaRes(weightVec, matrix);
     }
 
 
-    private static double sqfdFormulaRes(List<Double> weightVec, double[][] matrix) {
+    private double sqfdFormulaRes(List<Double> weightVec, double[][] matrix) {
         List<Double> interRes = new ArrayList<>(weightVec.size());
         double sum = 0;
 
@@ -37,15 +50,15 @@ public class SqfdFunction {
         return res;
     }
 
-    private static double[][] calcMatrix(List<Cluster> lfsFeatures, List<Cluster> rhsFeatures, SimilarityFunction function ) {
+    private double[][] calcMatrix(List<Cluster> lfsFeatures, List<Cluster> rhsFeatures, SimilarityFunction function ) {
         List<Position> vector = new ArrayList<>(lfsFeatures.size() + rhsFeatures.size());
         double [][] ret = new double[vector.size()][vector.size()];
 
         for (Cluster feature : lfsFeatures) {
-            vector.add(feature.getCenterOfMass());
+            vector.add(feature.getCenter());
         }
         for ( Cluster feature : rhsFeatures) {
-            vector.add(feature.getCenterOfMass());
+            vector.add(feature.getCenter());
         }
 
         for (int i = 0; i < vector.size() ; i++) {
@@ -58,7 +71,7 @@ public class SqfdFunction {
         return ret;
     }
 
-    private static List<Double> calcWeightvec(List<Cluster> lfsFeatures, List<Cluster> rhsFeatures) {
+    private List<Double> calcWeightvec(List<Cluster> lfsFeatures, List<Cluster> rhsFeatures) {
             List<Double> weightVector = new ArrayList<>(lfsFeatures.size() + rhsFeatures.size());
             for (Cluster feature : lfsFeatures) {
                 weightVector.add(feature.getWeight());
@@ -68,6 +81,5 @@ public class SqfdFunction {
             }
             return weightVector;
     }
-
 
 }

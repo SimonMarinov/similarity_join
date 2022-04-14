@@ -6,11 +6,11 @@ import java.util.List;
 
 public class Cluster {
     private List<SURFInterestPoint> points;
-    private Position centerOfMass;
+    private Position center;
     private Double weight= Double.MIN_VALUE;
 
     public Cluster() {
-        centerOfMass=null;
+        center =null;
     }
 
     public Cluster(List<SURFInterestPoint> points) {
@@ -38,15 +38,15 @@ public class Cluster {
             sumX += point.getX();
             sumY += point.getY();
         }
-        centerOfMass = new Position(sumX/points.size(), sumY/points.size());
+        center = new Position(sumX/points.size(), sumY/points.size());
     }
 
 
-    public Position getCenterOfMass() {
-        if (centerOfMass==null){
+    public Position getCenter() {
+        if (center ==null){
             calcCenterOfMass();
         }
-        return centerOfMass;
+        return center;
     }
 
     public List<SURFInterestPoint> getPoints() {
