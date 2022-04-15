@@ -21,6 +21,10 @@ public class UnZipper {
 
     public static ArrayList<MyImage> unzip(MultipartFile multipartFileile, String imgPointExtractionLib) throws IOException {
 
+        if (imgPointExtractionLib.equals("SIFT")) {
+            nu.pattern.OpenCV.loadShared();
+        }
+
         File file = new File(System.getProperty("java.io.tmpdir") + "/similiarityjoin/tmp/" + multipartFileile.getOriginalFilename());
         FileUtils.copyInputStreamToFile(multipartFileile.getInputStream(), file);
 
@@ -30,13 +34,14 @@ public class UnZipper {
         for (var zEntries = zip.entries(); zEntries.hasMoreElements();  ) {
 
             ZipEntry zEntry = zEntries.nextElement();
+            File img = new File( imagePath + File.separator + zEntry.getName());
+            FileUtils.copyInputStreamToFile(zip.getInputStream(zEntry), img);
 
-            if (imgPointExtractionLib == "SURF"){
-                File img = new File( imagePath + File.separator + zEntry.getName());
-                FileUtils.copyInputStreamToFile(zip.getInputStream(zEntry), img);
+            if (imgPointExtractionLib.equals("SURF")){
+
                 ret.add(new MyImageSurf(ImageIO.read(zip.getInputStream(zEntry)), zEntry.getName()));
             } else {
-                Mat image = Imgcodecs.imread(imagePath + File.separator + zEntry.getName());
+                Mat image = Imgcodecs.imread(img.getPath());
                 Mat grayImg = new Mat();
 
                 if (image.empty()) {

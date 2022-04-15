@@ -10,6 +10,8 @@ public abstract class MyImage {
 
     public MyImage(String name) {
         this.name = name;
+        points = new ArrayList<>();
+        features = new ArrayList<>();
     }
 
     abstract public void calculatePoints();
