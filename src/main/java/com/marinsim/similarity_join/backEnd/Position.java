@@ -1,14 +1,28 @@
 package com.marinsim.similarity_join.backEnd;
 
 import com.stromberglabs.jopensurf.SURFInterestPoint;
+import org.opencv.core.KeyPoint;
 
 public class Position {
-    public float x;
-    public float y;
+    private double x;
+    private double y;
 
-    public Position(float x, float y) {
+    public Position(double x, double y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Position(KeyPoint point) {
+        x = point.pt.x;
+        y = point.pt.y;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
     }
 
     public Position(SURFInterestPoint point){
@@ -17,11 +31,6 @@ public class Position {
     }
 
     public static double distanceBetween(Position lfs, Position rhs){
-       double dis = Math.sqrt(Math.pow(lfs.x - rhs.x, 2) + Math.pow(lfs.y + rhs.y, 2));
-       if (dis == Double.NaN ){
-           double kk = Math.pow(lfs.x - rhs.x, 2) + Math.pow(lfs.y + rhs.y, 2);
-           return 0;
-       }
-        return dis;
+        return Math.sqrt(Math.pow(lfs.x - rhs.x, 2) + Math.pow(lfs.y - rhs.y, 2));
     }
 }

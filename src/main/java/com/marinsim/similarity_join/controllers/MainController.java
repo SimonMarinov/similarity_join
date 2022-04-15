@@ -34,10 +34,10 @@ public class MainController {
             @RequestParam("compType") String compType,
             @RequestParam("funType") String funType,
             @RequestParam("alphaConst") Double alhaConst,
-            @RequestParam("disLim") Double distanceLimit
+            @RequestParam("disLim") Double distanceLimit,
+            @RequestParam("libType") String libTipe
             )
     {
-
         Values values = new Values(nofClusters, nofIter, alhaConst, minPer, distanceLimit);
 
         ArrayList<MyImage> imgs1;
@@ -46,8 +46,8 @@ public class MainController {
         try {
             ImgComparator comparisonFun;
             SimilarityFunction fun;
-            imgs1 = UnZipper.unzip(imgZip1);
-            imgs2 = UnZipper.unzip(imgZip2);
+            imgs1 = UnZipper.unzip(imgZip1, libTipe);
+            imgs2 = UnZipper.unzip(imgZip2, libTipe);
 
             if (compType.equals("SQFD")){
                 if (funType.equals("Gaussian")) {

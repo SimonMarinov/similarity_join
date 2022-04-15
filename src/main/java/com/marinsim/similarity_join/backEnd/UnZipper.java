@@ -1,6 +1,11 @@
 package com.marinsim.similarity_join.backEnd;
 
+import com.marinsim.similarity_join.backEnd.MyImages.MyImageSift;
+import com.marinsim.similarity_join.backEnd.MyImages.MyImageSurf;
 import org.apache.commons.io.FileUtils;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -14,7 +19,7 @@ public class UnZipper {
 
     public static String imagePath =System.getProperty("java.io.tmpdir") + "/similiarityjoin/tmp/images/";
 
-    public static ArrayList<MyImage> unzip(MultipartFile multipartFileile) throws IOException {
+    public static ArrayList<MyImage> unzip(MultipartFile multipartFileile, String imgPointExtractionLib) throws IOException {
 
         File file = new File(System.getProperty("java.io.tmpdir") + "/similiarityjoin/tmp/" + multipartFileile.getOriginalFilename());
         FileUtils.copyInputStreamToFile(multipartFileile.getInputStream(), file);
@@ -26,10 +31,23 @@ public class UnZipper {
 
             ZipEntry zEntry = zEntries.nextElement();
 
-            File img = new File( imagePath + File.separator + zEntry.getName());
-            FileUtils.copyInputStreamToFile(zip.getInputStream(zEntry), img);
+            if (imgPointExtractionLib == "SURF"){
+                File img = new File( imagePath + File.separator + zEntry.getName());
+                FileUtils.copyInputStreamToFile(zip.getInputStream(zEntry), img);
+                ret.add(new MyImageSurf(ImageIO.read(zip.getInputStream(zEntry)), zEntry.getName()));
+            } else {
+                Mat image = Imgcodecs.imread(imagePath + File.separator + zEntry.getName());
+                Mat grayImg = new Mat();
 
-            ret.add(new MyImage(ImageIO.read(zip.getInputStream(zEntry)), zEntry.getName()));
+                if (image.empty()) {
+                    throw new IllegalArgumentException("Could not read the image: ");
+                }
+
+                // Making the picture gray
+                Imgproc.cvtColor(image, grayImg, Imgproc.COLOR_BGR2GRAY);
+
+                ret.add(new MyImageSift(grayImg, zEntry.getName()));
+            }
 
         }
 

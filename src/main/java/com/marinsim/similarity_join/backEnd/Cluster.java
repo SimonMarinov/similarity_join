@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cluster {
-    private List<SURFInterestPoint> points;
+    private List<Position> points;
     private Double weight= Double.MIN_VALUE;
 
     public Cluster() {
         points = new ArrayList<>();
     }
 
-    public Cluster(List<SURFInterestPoint> points) {
+    public Cluster(List<Position> points) {
         this.points = points;
     }
 
@@ -34,7 +34,7 @@ public class Cluster {
         }
         float sumX = 0;
         float sumY = 0;
-        for (SURFInterestPoint point : points) {
+        for (var point : points) {
             sumX += point.getX();
             sumY += point.getY();
         }
@@ -42,7 +42,7 @@ public class Cluster {
     }
 
 
-    public List<SURFInterestPoint> getPoints() {
+    public List<Position> getPoints() {
         return points;
     }
 }

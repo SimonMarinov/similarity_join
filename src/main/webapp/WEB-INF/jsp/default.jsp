@@ -8,9 +8,22 @@
             <h1>
                 <label>Similarity Join</label>
             </h1>
+
+            <h3>
+                <label>library for point extraction</label>
+            </h3>
+
             <p>
-                values:
+                <label>OpenSurf:</label>
+                <input type="radio" id="openSurf" name="libType" value="SURF" checked>
+                <label>OpenCv:</label>
+                <input type="radio" id="openCv" name="libType" value="SIFT" >
+
             </p>
+
+            <h3>
+                <label>Values</label>
+            </h3>
 
             <p>
                 <label>minimal value of similarity:</label>
@@ -29,7 +42,7 @@
             </p>
 
             <p>
-                <label>SQFD:</label>
+            <h4><label>SQFD:</label></h4>
                 <input type="radio" id="radTypeSQFD" name="compType" value="SQFD" checked>
             </p>
 
@@ -44,7 +57,7 @@
             </p>
 
             <p>
-                <label>Euclid:</label>
+            <h4><label>Euclid:</label></h4>
                 <input type="radio" id="radTypeEuclid" name="compType" value="Euclid">
             </p>
 

@@ -1,7 +1,5 @@
 package com.marinsim.similarity_join.backEnd;
 
-import com.marinsim.similarity_join.backEnd.ImgComparators.SqfdComparator;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -20,12 +18,12 @@ public class PicturesComparator {
     public List<Pair<MyImage, List<Pair<MyImage, Double>>>> getComparisons() {
         for (MyImage img : lfsImgs) {
             img.calculatePoints();
-            img.calcFetures();
+            img.calcFeatures();
         }
 
         for (MyImage img : rhsImgs) {
             img.calculatePoints();
-            img.calcFetures();
+            img.calcFeatures();
         }
 
         List<Pair<MyImage, List<Pair<MyImage, Double>>>> comparisons = new ArrayList<>();

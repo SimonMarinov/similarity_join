@@ -1,33 +1,38 @@
 package com.marinsim.similarity_join.backEnd;
 
-import com.stromberglabs.jopensurf.SURFInterestPoint;
-import com.stromberglabs.jopensurf.Surf;
-
-import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
-public class MyImage {
-    private BufferedImage image;
-    private String name;
-    private List<SURFInterestPoint> points = null;
-    private List<Cluster> fetures = null;
+public abstract class MyImage {
+    protected String name;
+    protected List<Position> points = null;
+    protected List<Cluster> features = null;
 
-    public MyImage(BufferedImage image, String name) {
-        this.image = image;
+    public MyImage(String name) {
         this.name = name;
     }
 
-    void calculatePoints(){
-      Surf surf = new Surf(image);
-      points = surf.getFreeOrientedInterestPoints();
+    abstract public void calculatePoints();
+
+    protected void keyPointsNormalization(int imgWidth, int imgHeight) {
+        List<Position> normalPoints = new ArrayList<>();
+        for (Position point : points) {
+            float x = ((float) point.getX() / (float) imgWidth) * (float) 100;
+            float y = ((float) point.getY()/ (float) imgHeight) * (float) 100;
+
+            Position normalPoint = new Position(x, y);
+            normalPoints.add(normalPoint);
+        }
+        points.clear();
+        points.addAll(normalPoints);
     }
 
-    void calcFetures(){
-       fetures = KMeans.getFetures(points);
+    public void calcFeatures(){
+       features = KMeans.getFetures(points);
     }
 
     public final List<Cluster> getFeatures() {
-        return fetures;
+        return features;
     }
 
     public String getName() {

@@ -15,7 +15,7 @@ public class Values {
     private static boolean initOnlyOnce = false;
 
     public Values(int numOfClus, int maxNumOfIterations, double alpha, double percentageLim, double distanceLim) {
-        if (initOnlyOnce) throw new IllegalArgumentException();
+      //  if (initOnlyOnce) throw new IllegalArgumentException();
 
         distanceLimit = distanceLim;
         percentageLimit = percentageLim;
