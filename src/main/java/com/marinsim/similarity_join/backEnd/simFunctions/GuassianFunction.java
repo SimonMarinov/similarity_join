@@ -11,6 +11,7 @@ public class GuassianFunction implements SimilarityFunction {
 
     @Override
     public double getValue(Position lfs, Position rhs) {
+        var k =Math.exp(-Values.getAlphaConstant() * Math.pow(Position.distanceBetween(lfs, rhs), 2));
         return Math.exp(-Values.getAlphaConstant() * Math.pow(Position.distanceBetween(lfs, rhs), 2));
     }
 }

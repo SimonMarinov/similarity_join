@@ -17,10 +17,11 @@ public class Position {
     }
 
     public static double distanceBetween(Position lfs, Position rhs){
-        return Math.sqrt(Math.pow(lfs.x - rhs.x, 2) + Math.pow(lfs.y + rhs.y, 2));
-    }
-
-    public boolean isOnSamePlace(Position pos){
-        return x==pos.x && y==pos.y;
+       double dis = Math.sqrt(Math.pow(lfs.x - rhs.x, 2) + Math.pow(lfs.y + rhs.y, 2));
+       if (dis == Double.NaN ){
+           double kk = Math.pow(lfs.x - rhs.x, 2) + Math.pow(lfs.y + rhs.y, 2);
+           return 0;
+       }
+        return dis;
     }
 }

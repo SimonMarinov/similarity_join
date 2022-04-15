@@ -15,41 +15,26 @@
     <description>similarity_join</description>
     <properties>
         <java.version>17</java.version>
-        <spring.version>5.1.9.RELEASE</spring.version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId>
-            <scope>provided</scope>
-        </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-
-        <!-- This is a web application -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- Need this to compile JSP -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
             <scope>provided</scope>
         </dependency>
 
-        <!-- Apache commons op, easier work with files -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
 
-        <!-- JOpenSurf -->
         <dependency>
             <groupId>fit.cvut.cz.vwm.semestralka.lib.jopensurf</groupId>
             <artifactId>jopensurf</artifactId>
@@ -75,29 +60,10 @@
 
 
     <build>
-        <finalName>
-            vwm.spracvit.semestralka
-        </finalName>
         <plugins>
-
-            <!-- runable war as output-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <!-- include the JOpenSurf - it is local -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.2.3</version>
-                <configuration>
-                    <webResources>
-                        <resource>
-                            <directory>${basedir}/lib</directory>
-                            <targetPath>WEB-INF/lib</targetPath>
-                        </resource>
-                    </webResources>
-                </configuration>
             </plugin>
 
         </plugins>

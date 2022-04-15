@@ -29,12 +29,11 @@ public class SqfdComparator implements ImgComparator {
 
     private double sqfdFormulaRes(List<Double> weightVec, double[][] matrix) {
         List<Double> interRes = new ArrayList<>(weightVec.size());
-        double sum = 0;
 
         //first the second and third argument of sqfd is multiplyed to create intermidiatete resulet
         for (int i = 0; i < matrix.length ; i++) {
-            sum = 0;
-            for (int j = 0; j < matrix[j].length ; j++) {
+            double sum = 0;
+            for (int j = 0; j < matrix[i].length ; j++) {
                 sum +=  matrix[i][j] * weightVec.get(j);
             }
             interRes.add(sum);
@@ -52,13 +51,13 @@ public class SqfdComparator implements ImgComparator {
 
     private double[][] calcMatrix(List<Cluster> lfsFeatures, List<Cluster> rhsFeatures, SimilarityFunction function ) {
         List<Position> vector = new ArrayList<>(lfsFeatures.size() + rhsFeatures.size());
-        double [][] ret = new double[vector.size()][vector.size()];
+        double [][] ret = new double[lfsFeatures.size() + rhsFeatures.size()][lfsFeatures.size() + rhsFeatures.size()];
 
         for (Cluster feature : lfsFeatures) {
-            vector.add(feature.getCenter());
+            vector.add(feature.calcCenterOfMass());
         }
         for ( Cluster feature : rhsFeatures) {
-            vector.add(feature.getCenter());
+            vector.add(feature.calcCenterOfMass());
         }
 
         for (int i = 0; i < vector.size() ; i++) {

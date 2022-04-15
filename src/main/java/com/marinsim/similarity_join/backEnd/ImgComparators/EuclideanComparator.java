@@ -17,7 +17,7 @@ public class EuclideanComparator implements ImgComparator {
         for (Cluster lPos: lClust) {
             for (Cluster rPos : rClust){
 
-                if (Position.distanceBetween(lPos.getCenter(), rPos.getCenter()) < Values.getDistanceLimit()) {
+                if (Position.distanceBetween(lPos.calcCenterOfMass(), rPos.calcCenterOfMass()) < Values.getDistanceLimit()) {
                     count++;
                     break;
                 }

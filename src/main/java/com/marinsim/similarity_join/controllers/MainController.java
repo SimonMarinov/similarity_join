@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class MainController {
 
     @GetMapping
-    public String displayMainScreen(ModelMap modelMap) {return "kkt";}
+    public String displayMainScreen(ModelMap modelMap) {return "default";}
 
     @PostMapping
     public String showResult(
@@ -68,11 +68,12 @@ public class MainController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            return "errorScreen";
+            model.addAttribute("error", e.getMessage());
+            return "error";
         }
 
 
-        return "ResultScreen";
+        return "result";
     }
 
 }

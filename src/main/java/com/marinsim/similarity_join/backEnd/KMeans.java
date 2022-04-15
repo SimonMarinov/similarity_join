@@ -19,13 +19,29 @@ public class KMeans {
 
         int iteration = 0;
 
-        //first is center of centroid
+        if (Values.getNumOfClusters() > imgPoints.size()){
+            throw new IllegalArgumentException("not enough points from surf need to lower number of clusters");
+        } else if (Values.getNumOfClusters() == imgPoints.size()){
+            List<Cluster> ret = new ArrayList<>(imgPoints.size());
+            for (SURFInterestPoint surfInterestPoint : imgPoints){
+                Cluster ins = new Cluster();
+                ins.getPoints().add(surfInterestPoint);
+                ret.add(ins);
+            }
+            return ret;
+        }
+
         List<Position> oldCenters;
+        //first is center of centroid
         List<Pair<Position, Cluster>> centroids = randomCentroids(imgPoints);
 
         while (iteration < Values.getMaxNumOfIterations()){
 
             calcCentroids(centroids, imgPoints);
+
+            //dont know how to act here if Clusters are empty random positions will be picked as features of image
+            //decided to redistrubete rand points to emty clusters sou features of image wont be random points in image radher points
+            redistributePoints(centroids);
 
             oldCenters = recalcNewCenterOfCentroids(centroids);
 
@@ -39,7 +55,14 @@ public class KMeans {
 
         List<Cluster> ret = new ArrayList<>();
 
+        calcCentroids(centroids, imgPoints);
+
+        redistributePoints(centroids);
+
         for (Pair<Position, Cluster> centroid: centroids) {
+                if (centroid.second.calcCenterOfMass() == null) {
+                    throw new IllegalCallerException();
+                }
             centroid.second.calcWeight(imgPoints.size());
             ret.add(centroid.second);
 
@@ -47,6 +70,29 @@ public class KMeans {
 
 
         return ret;
+    }
+
+    private static void redistributePoints(List<Pair<Position, Cluster>> centroids) {
+        List<Cluster> emptyCluster = new ArrayList<>();
+        for (Pair<Position, Cluster> centroid: centroids) {
+           if (centroid.second.getPoints().size() == 0){
+               emptyCluster.add(centroid.second);
+           }
+        }
+
+        Random rand = new Random();
+
+        // pick random point form ranom centroid which is not empty
+        for (int i = 0; i < emptyCluster.size(); i++) {
+            int idxOfRandCentroid = rand.nextInt(centroids.size());
+            while (centroids.get(idxOfRandCentroid).second.getPoints().size() < 2 ) {
+                idxOfRandCentroid = rand.nextInt(centroids.size());
+            }
+            int idxOfRandPoint = rand.nextInt(centroids.get(idxOfRandCentroid).second.getPoints().size());
+            var removedPoint = centroids.get(idxOfRandCentroid).second.getPoints().remove(idxOfRandPoint);
+            emptyCluster.get(i).getPoints().add(removedPoint);
+        }
+
     }
 
     /**
@@ -58,7 +104,7 @@ public class KMeans {
      */
     private static boolean clusterChaged(List<Position> oldCenters, List<Pair<Position, Cluster>> centroids) {
         for (int i = 0; i < centroids.size(); i++) {
-            if (!oldCenters.get(i).isOnSamePlace(centroids.get(i).first)) {
+            if (Position.distanceBetween(oldCenters.get(i), centroids.get(i).first) >  Math.ulp(2.0)) {
                 return true;
             }
         }
@@ -75,10 +121,11 @@ public class KMeans {
         List<Position> oldCenters = new ArrayList<>();
 
         for (Pair<Position, Cluster> centroid: centroids) {
-            newCentroids.add(new Pair<>(centroid.second.getCenter(), new Cluster()));
+            newCentroids.add(new Pair<>(centroid.second.calcCenterOfMass(), new Cluster()));
             oldCenters.add(centroid.first);
         }
-        centroids = newCentroids;
+        centroids.clear();
+        centroids.addAll(newCentroids);
 
         return oldCenters;
     }
@@ -101,6 +148,7 @@ public class KMeans {
                     idxOfFoundCentroid = idx;
                 }
             }
+
 
             centroids.get(idxOfFoundCentroid).second.getPoints().add(surfPos);
         }

@@ -17,10 +17,9 @@ public class MyImage {
         this.name = name;
     }
 
-    List<SURFInterestPoint> calculatePoints(){
+    void calculatePoints(){
       Surf surf = new Surf(image);
       points = surf.getFreeOrientedInterestPoints();
-      return points;
     }
 
     void calcFetures(){

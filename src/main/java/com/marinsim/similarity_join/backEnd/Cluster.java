@@ -2,15 +2,15 @@ package com.marinsim.similarity_join.backEnd;
 
 import com.stromberglabs.jopensurf.SURFInterestPoint;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cluster {
     private List<SURFInterestPoint> points;
-    private Position center;
     private Double weight= Double.MIN_VALUE;
 
     public Cluster() {
-        center =null;
+        points = new ArrayList<>();
     }
 
     public Cluster(List<SURFInterestPoint> points) {
@@ -28,9 +28,9 @@ public class Cluster {
         return weight;
     }
 
-    private void calcCenterOfMass(){
+    public Position calcCenterOfMass(){
         if (points.isEmpty()) {
-            throw new IllegalStateException();
+            return null;
         }
         float sumX = 0;
         float sumY = 0;
@@ -38,16 +38,9 @@ public class Cluster {
             sumX += point.getX();
             sumY += point.getY();
         }
-        center = new Position(sumX/points.size(), sumY/points.size());
+        return new Position(sumX/points.size(), sumY/points.size());
     }
 
-
-    public Position getCenter() {
-        if (center ==null){
-            calcCenterOfMass();
-        }
-        return center;
-    }
 
     public List<SURFInterestPoint> getPoints() {
         return points;

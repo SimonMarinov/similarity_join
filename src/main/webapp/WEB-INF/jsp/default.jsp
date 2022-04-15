@@ -1,5 +1,4 @@
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <form action="/" method="post" commandName="input" enctype="multipart/form-data" >
 
@@ -77,5 +76,5 @@
         </capation>
         </thead>
     </table>
-</form>>
+</form>
 </html>
