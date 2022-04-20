@@ -17,15 +17,14 @@ import java.util.zip.ZipFile;
 
 public class UnZipper {
 
-    public static String imagePath =System.getProperty("java.io.tmpdir") + "/similiarityjoin/tmp/images/";
-
     public static ArrayList<MyImage> unzip(MultipartFile multipartFileile, String imgPointExtractionLib) throws IOException {
 
         if (imgPointExtractionLib.equals("SIFT")) {
             nu.pattern.OpenCV.loadShared();
         }
 
-        File file = new File(System.getProperty("java.io.tmpdir") + "/similiarityjoin/tmp/" + multipartFileile.getOriginalFilename());
+        File file = new File(Values.IMG_PATH + multipartFileile.getOriginalFilename());
+        file.deleteOnExit();
         FileUtils.copyInputStreamToFile(multipartFileile.getInputStream(), file);
 
         ZipFile zip = new ZipFile(file);
@@ -34,7 +33,10 @@ public class UnZipper {
         for (var zEntries = zip.entries(); zEntries.hasMoreElements();  ) {
 
             ZipEntry zEntry = zEntries.nextElement();
-            File img = new File( imagePath + File.separator + zEntry.getName());
+            File img = new File( Values.IMG_PATH + zEntry.getName());
+            img.deleteOnExit();
+            if (zEntry.isDirectory()) continue;
+
             FileUtils.copyInputStreamToFile(zip.getInputStream(zEntry), img);
 
             if (imgPointExtractionLib.equals("SURF")){

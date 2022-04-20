@@ -10,5 +10,12 @@
 <%
   out.println(request.getAttribute("error"));
 %>
+
+<p>
+    <a href="/">
+        <input type="button" value="Go back" style="height:50px;font-size:30px"/>
+    </a>
+</p>
+
 </body>
 </html>

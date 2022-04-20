@@ -6,6 +6,9 @@ package com.marinsim.similarity_join.backEnd;
  * could be called settings
  */
 public class Values {
+    public static final String IMG_PATH = "tmp/";
+
+
     private static int numOfClusters;
     private static int MaxNumOfIterations;
     private static double alphaConstant;

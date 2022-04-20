@@ -83,7 +83,7 @@
 
 
             <p>
-                <button id = "btnSubmit" type='submit' style="height:40px;font-size:20px;"><i>compare</i></button>
+                <button id = "btnSubmit" type='submit' style="height:50px;font-size:30px;"><i>compare</i></button>
             </p>
 
         </capation>

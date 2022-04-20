@@ -14,6 +14,11 @@
     <label>Similarity Join</label>
 </h3>
 
+<p>
+<a href="/">
+    <input type="button" value="Go back" style="height:50px;font-size:30px"/>
+</a>
+</p>
 <%
 
     for (Pair<MyImage, List<Pair<MyImage, Double>>> imgRes : (List<Pair<MyImage, List<Pair<MyImage, Double>>>>) request.getAttribute("result") ) {
@@ -22,13 +27,13 @@
 
         out.println("<table><tr>");
 
-        out.println("<td><br><img src=\"tmp/images/" + imgRes.first.getName()+ "\" width=\"200\" height=\"200\"></td>");
+        out.println("<td><br><img src=\"images/" + imgRes.first.getName().replaceAll("/","&") + "\" width=\"200\" height=\"200\"></td>");
         //print splitter
         out.println("<td><br><img src=\"black.png\"width=\"15\" height=\"200\"></td>");
         //print similiar images
         for(Pair<MyImage, Double> similarImg :imgRes.second){
             out.println("<td>" + similarImg.second);
-            out.println("<br><img src=\"tmp/images/" + similarImg.first.getName() + "\" width=\"200\" height=\"200\"></td>");
+            out.println("<br><img src=\"images/" + similarImg.first.getName().replaceAll("/","&")+ "\" width=\"200\" height=\"200\"></td>");
             out.println("<td><br><img src=\"black.png\"width=\"10\" height=\"200\"></td>");
 
         }
@@ -36,6 +41,8 @@
     }
 
 %>
+
+
 
 
 <br>

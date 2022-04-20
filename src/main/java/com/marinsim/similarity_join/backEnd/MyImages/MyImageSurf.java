@@ -22,6 +22,6 @@ public class MyImageSurf extends MyImage {
         for (var sPoint: surfPoints) {
             points.add(new Position(sPoint));
         }
-        keyPointsNormalization(image.getWidth(), image.getHeight());
+       // keyPointsNormalization(image.getWidth(), image.getHeight());
     }
 }

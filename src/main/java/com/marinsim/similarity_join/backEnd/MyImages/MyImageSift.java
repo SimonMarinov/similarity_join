@@ -32,6 +32,6 @@ public class MyImageSift extends MyImage {
             points.add(new Position(point));
         }
 
-        keyPointsNormalization(matImg.width(), matImg.height());
+      //  keyPointsNormalization(matImg.width(), matImg.height());
     }
 }

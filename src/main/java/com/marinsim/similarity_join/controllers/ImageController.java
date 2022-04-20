@@ -1,5 +1,6 @@
 package com.marinsim.similarity_join.controllers;
 
+import com.marinsim.similarity_join.backEnd.Values;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +15,15 @@ import java.io.*;
  * Controller for images
  */
 @Controller
-@RequestMapping(value = "/tmp/images/")
+@RequestMapping(value = "images/")
 public class ImageController {
 
     @GetMapping("{imgName}")
     public void getImage(HttpServletResponse response, @PathVariable String imgName) throws IOException {
 
-        File img = new File(UnZipper.imagePath + File.separator + imgName);
+        imgName = imgName.replaceAll("&","/");
+
+        File img = new File(Values.IMG_PATH + imgName);
         //System.out.println(img.getAbsolutePath());
         InputStream in = new FileInputStream(img);
         OutputStream out = response.getOutputStream();
