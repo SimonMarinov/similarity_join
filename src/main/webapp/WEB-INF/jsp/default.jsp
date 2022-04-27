@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>default</title>
+</head>
+<body style="background-color:moccasin">
 <form action="/" method="post" commandName="input" enctype="multipart/form-data" >
-
     <table>
         <thead>
-        <capation align = "left">
+        <body align = "left">
             <h1>
                 <label>Similarity Join</label>
             </h1>
@@ -26,8 +29,18 @@
             </h3>
 
             <p>
-                <label>minimal value of similarity:</label>
-                <input type="number" id="simPer" name="minSimPer"  step="0.01" min="0" max="1" value="0.5" required>
+                <label>knn:</label>
+                <input type="radio" id="res" name="resType" value="knn" checked >
+                <label>max:</label>
+                <input type="radio" id="res" name="resType" value="max" >
+                <label>min:</label>
+                <input type="radio" id="res" name="resType" value="min" >
+                <label>value</label>
+                <input type="number" id="simPer" name="resValue"   min="0" max="100" value="5" required>
+            </p>
+
+
+            <p>
                 <label>number of clusters:</label>
                 <input type="number" id="nofClusters" name="nofClusters" min="0" max="1000" value="30" required>
                 <label>limit of kMeans iterations:</label>
@@ -39,7 +52,7 @@
             <h3>
                 <label>Functions for comparison</label>
             </h3>
-            </p>
+            </body>
 
             <p>
             <h4><label>SQFD:</label></h4>
@@ -47,8 +60,10 @@
             </p>
 
             <p>
+                <label>minus:</label>
+                <input type="radio" id="funcTypeMinus" name="funType" value="minus" checked >
                 <label>Guassian:</label>
-                <input type="radio" id="funcTypeEuc" name="funType" value="Gaussian" checked>
+                <input type="radio" id="funcTypeEuc" name="funType" value="gaussian" >
                 <label>heuristic:</label>
                 <input type="radio" id="funcTypeHeuristic" name="funType" value="heuristic" >
                 <label>alpha constant:</label>
@@ -62,8 +77,8 @@
             </p>
 
             <p>
-                <label>distance limit:</label>
-                <input type="number" id="disLim" name="disLim" step="0.1" min="0" max="1000" value="1" required>
+                <label>distance percentage limit:</label>
+                <input type="number" id="disLim" name="disLimPer" step="0.01" min="0" max="1" value="0.05" required>
             </p>
 
             <h3>
@@ -85,9 +100,9 @@
             <p>
                 <button id = "btnSubmit" type='submit' style="height:50px;font-size:30px;"><i>compare</i></button>
             </p>
-
         </capation>
         </thead>
     </table>
 </form>
+</body>
 </html>

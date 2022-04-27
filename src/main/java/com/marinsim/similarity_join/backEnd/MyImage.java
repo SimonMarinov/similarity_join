@@ -19,14 +19,19 @@ public abstract class MyImage {
     protected void keyPointsNormalization(int imgWidth, int imgHeight) {
         List<Position> normalPoints = new ArrayList<>();
         for (Position point : points) {
-            float x = ((float) point.getX() / (float) imgWidth) * (float) 100;
-            float y = ((float) point.getY()/ (float) imgHeight) * (float) 100;
+            //using linear mapping
+            double x =  point.getX() * Values.IMG_WIDTH_LEN / imgWidth;
+            double y = point.getY() * Values.IMG_WIDTH_LEN / imgHeight;
 
             Position normalPoint = new Position(x, y);
             normalPoints.add(normalPoint);
         }
         points.clear();
         points.addAll(normalPoints);
+    }
+
+    public int nofExtractedPoints(){
+        return points.size();
     }
 
     public void calcFeatures(){

@@ -10,5 +10,5 @@ public interface ImgComparator {
      * @param rhs right image
      * @return returns percentage of similiraty between left image to right image
      */
-    double calcComparison(MyImage lfs, MyImage rhs);
+    double compare(MyImage lfs, MyImage rhs);
 }

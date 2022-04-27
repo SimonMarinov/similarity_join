@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Cluster {
     private List<Position> points;
-    private Double weight= Double.MIN_VALUE;
+    private Double weight = Double.MIN_VALUE;
 
     public Cluster() {
         points = new ArrayList<>();
@@ -28,7 +28,7 @@ public class Cluster {
         return weight;
     }
 
-    public Position calcCenterOfMass(){
+    public Position calcCenterOfMass() {
         if (points.isEmpty()) {
             return null;
         }
@@ -38,7 +38,7 @@ public class Cluster {
             sumX += point.getX();
             sumY += point.getY();
         }
-        return new Position(sumX/points.size(), sumY/points.size());
+        return new Position(sumX / points.size(), sumY / points.size());
     }
 
 

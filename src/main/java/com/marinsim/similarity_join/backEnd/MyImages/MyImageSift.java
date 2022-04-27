@@ -27,11 +27,14 @@ public class MyImageSift extends MyImage {
         SIFT sift = SIFT.create();
         sift.detect(matImg, keyPoints);
 
+        if (keyPoints.toList().isEmpty()) throw new IllegalStateException();
+
+
         List<KeyPoint> keyPointsList = keyPoints.toList();
         for (var point : keyPointsList) {
             points.add(new Position(point));
         }
 
-      //  keyPointsNormalization(matImg.width(), matImg.height());
+        keyPointsNormalization(matImg.width(), matImg.height());
     }
 }

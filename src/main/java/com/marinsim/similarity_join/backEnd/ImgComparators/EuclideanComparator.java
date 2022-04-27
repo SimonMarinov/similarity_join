@@ -8,14 +8,14 @@ public class EuclideanComparator implements ImgComparator {
 
 
     @Override
-    public double calcComparison(MyImage lfs, MyImage rhs) {
+    public double compare(MyImage lfs, MyImage rhs) {
         var lClust = lfs.getFeatures();
         var rClust = rhs.getFeatures();
 
         int count = 0;
 
-        for (Cluster lPos: lClust) {
-            for (Cluster rPos : rClust){
+        for (Cluster lPos : lClust) {
+            for (Cluster rPos : rClust) {
 
                 if (Position.distanceBetween(lPos.calcCenterOfMass(), rPos.calcCenterOfMass()) < Values.getDistanceLimit()) {
                     count++;
@@ -25,6 +25,6 @@ public class EuclideanComparator implements ImgComparator {
             }
         }
 
-        return (double) count / (double) Values.getNumOfClusters();
+        return 1 - ((double) count / (double) Values.getNumOfClusters());
     }
 }

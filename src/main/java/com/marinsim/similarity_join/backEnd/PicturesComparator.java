@@ -15,7 +15,7 @@ public class PicturesComparator {
         this.imgComparator = imgComparator;
     }
 
-    public List<Pair<MyImage, List<Pair<MyImage, Double>>>> getComparisons() {
+    public List<Pair<MyImage, List<Pair<MyImage, Double>>>> getComparisons(String resType, int resVal) {
         for (MyImage img : lfsImgs) {
             img.calculatePoints();
             img.calcFeatures();
@@ -32,19 +32,32 @@ public class PicturesComparator {
             List<Pair<MyImage, Double>> imgsRes = new ArrayList<>();
 
             for (MyImage rImg: rhsImgs) {
-                double per = imgComparator.calcComparison(lImg, rImg);
-                if (per > Values.getPercentageLimit()) {
-                    imgsRes.add(new Pair<>(rImg, per));
+                double disDif = imgComparator.compare(lImg, rImg);
+
+                if (resType.equals("max")) {
+                    if (disDif < resVal) {
+                        imgsRes.add(new Pair<>(rImg, disDif));
+                    }
+                } else if (resType.equals("min")){
+                    if (disDif > resVal) {
+                        imgsRes.add(new Pair<>(rImg, disDif));
+                    }
+                } else {
+                    imgsRes.add(new Pair<>(rImg, disDif));
                 }
             }
             imgsRes.sort(new Comparator<Pair<MyImage, Double>>() {
                 @Override
                 public int compare(Pair<MyImage, Double> o1, Pair<MyImage, Double> o2) {
-                    return -Double.compare(o1.second, o2.second);
+                    return Double.compare(o1.second, o2.second);
                 }
             });
 
-            comparisons.add(new Pair<>(lImg, imgsRes));
+            if (resType.equals("knn") && imgsRes.size()>resVal){
+                comparisons.add(new Pair<>(lImg, imgsRes.subList(0,resVal)));
+            } else {
+                comparisons.add(new Pair<>(lImg, imgsRes));
+            }
         }
 
         return comparisons;

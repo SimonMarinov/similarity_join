@@ -19,9 +19,10 @@ public class MyImageSurf extends MyImage {
     public void calculatePoints() {
         Surf surf = new Surf(image);
         var surfPoints = surf.getFreeOrientedInterestPoints();
-        for (var sPoint: surfPoints) {
+        if (surfPoints.isEmpty()) throw new IllegalStateException();
+        for (var sPoint : surfPoints) {
             points.add(new Position(sPoint));
         }
-       // keyPointsNormalization(image.getWidth(), image.getHeight());
+        keyPointsNormalization(image.getWidth(), image.getHeight());
     }
 }

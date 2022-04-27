@@ -7,25 +7,21 @@ package com.marinsim.similarity_join.backEnd;
  */
 public class Values {
     public static final String IMG_PATH = "tmp/";
-
+    public static final int IMG_WIDTH_LEN = 200;
+    public static final int IMG_SIZE = 40000;
+    public static final double PER_OF_DISTANCE_DISTRIBUTION = 0.003;
 
     private static int numOfClusters;
     private static int MaxNumOfIterations;
     private static double alphaConstant;
-    private static double percentageLimit;
-    private static double distanceLimit;
+    private static double distanceLimitPer;
 
-    private static boolean initOnlyOnce = false;
+    public Values(int numOfClus, int maxNumOfIterations, double alpha, double distanceLim) {
 
-    public Values(int numOfClus, int maxNumOfIterations, double alpha, double percentageLim, double distanceLim) {
-      //  if (initOnlyOnce) throw new IllegalArgumentException();
-
-        distanceLimit = distanceLim;
-        percentageLimit = percentageLim;
+        distanceLimitPer = distanceLim;
         numOfClusters = numOfClus;
         MaxNumOfIterations = maxNumOfIterations;
         alphaConstant = alpha;
-        initOnlyOnce = true;
     }
 
     public static double getAlphaConstant() {
@@ -40,11 +36,7 @@ public class Values {
         return MaxNumOfIterations;
     }
 
-    public static double getPercentageLimit() {
-        return percentageLimit;
-    }
-
-    public static double getDistanceLimit() {
-        return distanceLimit;
+    public static double getDistanceLimit(){
+        return distanceLimitPer * IMG_WIDTH_LEN;
     }
 }
