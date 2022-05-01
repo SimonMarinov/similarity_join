@@ -8,4 +8,4 @@ Then run "mvn spring-boot:run" at project directory
 Aplication is avalibel at localhost:8000
 
 ## Test Data
-test data for comparison are avalibele in folder: similarity_join/src/test/resources/
+test data for comparison are avalibele in folder: src/test/resources/
